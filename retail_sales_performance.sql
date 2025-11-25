@@ -34,9 +34,18 @@ select Transaction_ID,Date,Customer_ID,Gender,Age,
 Product_Category,Quantity,Price_per_Unit,
 Total_Amount,Age_Group,Sales_Classification
 from sales_performance
-where Transaction_ID and Date and Customer_ID and Gender and Age and
-Product_Category and Quantity and Price_per_Unit and
-Total_Amount and Age_Group and Sales_Classification is null;
+where Transaction_ID 
+and Date 
+and Customer_ID 
+and Gender 
+and Age 
+and Product_Category 
+and Quantity 
+and Price_per_Unit 
+and Total_Amount 
+and Age_Group 
+and Sales_Classification 
+is null;
 
 #Checking Data_types 
 describe sales_performance;
@@ -54,11 +63,11 @@ from sales_performance;
 select count(Transaction_ID)
 from sales_performance;
 
-# Distinct Product_categories
+# Product_categories
 select distinct Product_Category
 from sales_performance;
 
-# Total distinct Customers
+# Total Customers
 select distinct count(Customer_ID)
 from sales_performance;
 
@@ -106,13 +115,13 @@ select dayname(Date),sum(Total_Amount)
 from sales_performance
 group by dayname(Date);
 
-# Top 10 customers by revenue
+# Top 50 customers by revenue
 select Customer_ID,max(Total_Amount)
 from sales_performance
 group by Customer_ID
 order by max(Total_Amount) 
 desc
-limit 10;
+limit 50;
 
 # Average Age of Customers who spend above average revenue.
 select avg(Age)
@@ -149,7 +158,7 @@ group by Product_Category,monthname(Date)
 order by sum(Total_Amount) desc;
 
 # Which age group spends the most on Electronics?
-select Product_Category,Age_Group,sum(Total_Amount)
+select Product_Category,Age_Group,sum(Total_Amount) as Revenue
 from sales_performance
 where Product_Category='Electronics'
 group by Age_Group;
@@ -162,7 +171,7 @@ order by Age_Group asc;
 
 # Which day of the week has the highest average revenue ?
 select dayname(Date) as Day,
-avg(Total_Amount) as Average_Revenue
+round(avg(Total_Amount),2) as Average_Revenue
 from sales_performance
 group by dayname(Date)
 order by avg(Total_Amount) desc;
